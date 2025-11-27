@@ -1,6 +1,6 @@
-import pygame
+import pygame # type: ignore
 import random
-from asteroid import Asteroid
+from asteroid import Asteroid # type: ignore
 from constants import *
 
 

@@ -3,10 +3,6 @@ from circleshape import CircleShape   # <-- adjust if your file is named differe
 from constants import SHOT_RADIUS
 
 class Shot(CircleShape):
-    """
-    A simple bullet that flies straight in the direction it was fired.
-    Inherits from `CircleShape` so we only need to override draw/update.
-    """
 
     def __init__(self, x: float, y: float):
         super().__init__(
@@ -21,7 +17,6 @@ class Shot(CircleShape):
         self.color = (255, 255, 0)  # Yellow
 
     def draw(self, surface: pygame.Surface):
-        """Draw the bullet as a filled circle."""
         pygame.draw.circle(
             surface,
             self.color,
@@ -30,8 +25,9 @@ class Shot(CircleShape):
         )
 
     def update(self, dt: float):
-        """
-        Move the shot according to its velocity.
-        `dt` is the time passed in seconds.
-        """
+
         super().update(dt)   # CircleShape.update already moves the sprite
+        self.x = self.position.x
+        self.y = self.position.y
+
+        

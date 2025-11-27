@@ -1,8 +1,8 @@
 import pygame # type: ignore
 import math
-from constants import PLAYER_RADIUS, LINE_WIDTH, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED
+from constants import PLAYER_RADIUS, LINE_WIDTH, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN_SECONDS
 from circleshape import CircleShape   # type: ignore # adjust path if needed
-from shot import Shot 
+from shot import Shot  # type: ignore
 
 class Player(CircleShape):
     def __init__(self, x, y):
@@ -10,6 +10,7 @@ class Player(CircleShape):
         self.x = x
         self.y = y
         self.rotation = 0
+        self.shoot_timer: float = 0.0
 
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -46,15 +47,12 @@ class Player(CircleShape):
             self.move(dt)
         if keys[pygame.K_s]:
             self.move(-dt)
+        self.shoot_timer -= dt
 
     def shoot(self):
-        """
-        Fires a single bullet from the current position.
-        The bullet inherits the player's facing direction and
-        is propelled at `PLAYER_SHOOT_SPEED` pixels/second.
-        """
-        bullet = Shot(self.x, self.y)
-
-        # Start pointing straight up (0, 1) then rotate to match player
-        dir_vector = pygame.math.Vector2(0, 1).rotate(-self.rotation)
+        if self.shoot_timer > 0:
+            return      
+        bullet = Shot(self.position.x, self.position.y)
+        dir_vector = pygame.math.Vector2(0, 1).rotate(self.rotation)
         bullet.velocity = dir_vector * PLAYER_SHOOT_SPEED
+        self.shoot_timer = PLAYER_SHOOT_COOLDOWN_SECONDS

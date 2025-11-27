@@ -2,10 +2,10 @@ import pygame # type: ignore
 import sys                # needed for sys.exit()
 from logger import log_event   # <-- new import
 from constants import *
-from constants import SHOT_RADIUS, PLAYER_SHOOT_SPEED
+from constants import SHOT_RADIUS, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN_SECONDS
 from logger import log_state
 from player import Player # type: ignore
-from asteroidfield import *
+from asteroidfield import * # type: ignore
 from shot import *  # type: ignore
 
 def main():
@@ -42,13 +42,12 @@ def main():
         if keys[pygame.K_SPACE]:
             player.shoot() 
 
-        # Check every asteroid against the player.
-        # The `collides_with` method now encapsulates the math.
-        for asteroid in asteroids:          # ``asteroids`` is a pygame.sprite.Group
+
+        for asteroid in asteroids:          
             if asteroid.collides_with(player):
-                log_event("player_hit")      # record the event
+                log_event("player_hit")      
                 print("Game over!")
-                sys.exit()                   # terminate immediately
+                sys.exit()                   
 
         for asteroid in asteroids:
             if asteroid.collides_with(player):
