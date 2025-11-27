@@ -1,5 +1,5 @@
 import pygame                   # type: ignore
-from circleshape import CircleShape   # <-- adjust if your file is named differently
+from circleshape import CircleShape  
 from constants import SHOT_RADIUS
 
 class Shot(CircleShape):
@@ -9,10 +9,9 @@ class Shot(CircleShape):
             x=x,
             y=y,
             radius=SHOT_RADIUS,
-                    
         )
         self.velocity = pygame.math.Vector2(0, 0)
-        self.x = x          # integer/float coordinates for the bullet centre
+        self.x = x          
         self.y = y
         self.color = (255, 255, 0)  # Yellow
 
@@ -25,9 +24,7 @@ class Shot(CircleShape):
         )
 
     def update(self, dt: float):
-
-        super().update(dt)   # CircleShape.update already moves the sprite
+        super().update(dt)   
         self.x = self.position.x
         self.y = self.position.y
 
-        

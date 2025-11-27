@@ -1,7 +1,7 @@
 import pygame # type: ignore
 import math
 from constants import PLAYER_RADIUS, LINE_WIDTH, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN_SECONDS
-from circleshape import CircleShape   # type: ignore # adjust path if needed
+from circleshape import CircleShape   # type: ignore 
 from shot import Shot  # type: ignore
 
 class Player(CircleShape):
@@ -27,7 +27,7 @@ class Player(CircleShape):
             self.triangle(),
             LINE_WIDTH
         )
-        
+
     def rotate(self, dt):
         self.rotation += PLAYER_TURN_SPEED * dt
 
@@ -56,3 +56,4 @@ class Player(CircleShape):
         dir_vector = pygame.math.Vector2(0, 1).rotate(self.rotation)
         bullet.velocity = dir_vector * PLAYER_SHOOT_SPEED
         self.shoot_timer = PLAYER_SHOOT_COOLDOWN_SECONDS
+
