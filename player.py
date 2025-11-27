@@ -1,8 +1,8 @@
 import pygame # type: ignore
 import math
-from constants import PLAYER_RADIUS, LINE_WIDTH, PLAYER_TURN_SPEED, PLAYER_SPEED
+from constants import PLAYER_RADIUS, LINE_WIDTH, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED
 from circleshape import CircleShape   # type: ignore # adjust path if needed
-#from main import dt # type: ignore
+from shot import Shot 
 
 class Player(CircleShape):
     def __init__(self, x, y):
@@ -46,3 +46,15 @@ class Player(CircleShape):
             self.move(dt)
         if keys[pygame.K_s]:
             self.move(-dt)
+
+    def shoot(self):
+        """
+        Fires a single bullet from the current position.
+        The bullet inherits the player's facing direction and
+        is propelled at `PLAYER_SHOOT_SPEED` pixels/second.
+        """
+        bullet = Shot(self.x, self.y)
+
+        # Start pointing straight up (0, 1) then rotate to match player
+        dir_vector = pygame.math.Vector2(0, 1).rotate(-self.rotation)
+        bullet.velocity = dir_vector * PLAYER_SHOOT_SPEED
